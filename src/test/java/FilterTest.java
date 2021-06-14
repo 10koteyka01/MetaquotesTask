@@ -28,6 +28,12 @@ public class FilterTest {
         setUpDriver();
     }
 
+    /**
+     * В тесте не предусмотрено ожидание загрузки элементов, поэтому на медленных устройствах он может работать
+     * не корректно. Не нашёл удобного механизма для этих ожиданий в Appium, как в Selenide. Решение
+     * вижу в написании своей реализации класса MobileElement, в которой доделать возможность проверки и ожиданий,
+     * либо в использовании более удобного фреймворка для UI-тестирования типа Selenide.
+     */
     @Test
     @DisplayName("Тест экономического календаря")
     void test() {
@@ -66,7 +72,7 @@ public class FilterTest {
             Calendar calendar = Calendar.getInstance();
             calendar.roll(Calendar.YEAR, false);
 
-            log.info("Date\t\t\t|\tActual\t\t|\tForecast\t|\tPrevious");
+            log.info("Date\t\t|\tActual\t\t|\tForecast\t|\tPrevious");
 
             Set<HistoryRow> history = eventPage.historyTable();
             history.forEach(row -> {

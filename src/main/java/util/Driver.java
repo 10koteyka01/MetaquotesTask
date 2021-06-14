@@ -14,6 +14,10 @@ public class Driver {
     public static AndroidDriver<MobileElement> driver;
     private static Device device;
 
+    /**
+     * Поиск элемента по Id
+     * Драйвер будет установлен автоматически, если это не было сделано ранее
+     */
     public static WebElement byId(String locator) {
         if (driver == null) setUpDriver();
         return driver.findElementById(locator);
@@ -21,6 +25,7 @@ public class Driver {
 
     /**
      * Поиск элемента по Id
+     * Драйвер будет установлен автоматически, если это не было сделано ранее
      */
     public static MobileElement mobileElementById(String locator) {
         return (MobileElement) byId(locator);
@@ -28,13 +33,16 @@ public class Driver {
 
     /**
      * Поиск элемента по CSS
+     * Драйвер будет установлен автоматически, если это не было сделано ранее
      */
     public static List<MobileElement> mobileElementsByClassName(String locator){
+        if (driver == null) setUpDriver();
         return driver.findElementsByClassName(locator);
     }
 
     /**
      * Поиск списка элементов по Id
+     * Драйвер будет установлен автоматически, если это не было сделано ранее
      */
     public static List<MobileElement> mobileElementsById(String locator){
         if (driver == null) setUpDriver();
@@ -43,13 +51,16 @@ public class Driver {
 
     /**
      * Поиск элемента по AccessibilityId
+     * Драйвер будет установлен автоматически, если это не было сделано ранее
      */
     public static MobileElement mobileElementByAccessibilityId(String locator) {
+        if (driver == null) setUpDriver();
         return driver.findElementByAccessibilityId(locator);
     }
 
     /**
      * Поиск элемента по xpath
+     * Драйвер будет установлен автоматически, если это не было сделано ранее
      */
     public static WebElement byXpath(String locator) {
         if (driver == null) setUpDriver();
@@ -58,15 +69,19 @@ public class Driver {
 
     /**
      * Поиск мобильного элемента по xpath
+     * Драйвер будет установлен автоматически, если это не было сделано ранее
      */
     public static MobileElement mobileElementByXpath(String locator) {
+        if (driver == null) setUpDriver();
         return (MobileElement) byXpath(locator);
     }
 
     /**
      * Поиск мобильных элементов по xpath
+     * Драйвер будет установлен автоматически, если это не было сделано ранее
      */
     public static List<MobileElement> mobileElementsByXpath(String locator) {
+        if (driver == null) setUpDriver();
         return driver.findElementsByXPath(locator);
     }
 
@@ -115,8 +130,12 @@ public class Driver {
     public static void setUpDriver() {
         quit();
 
-        if (device == null)
+        String deviceName = System.getenv("deviceName");
+
+        if (deviceName == null)
             device = Device.Pixel4;
+        else
+            device = Device.valueOf(deviceName);
 
         step("Открыть приложение Tradays", () -> {
             driver = new AndroidDriver(new URL(device.getUrl()), getCapabilities());

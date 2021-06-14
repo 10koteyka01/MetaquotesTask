@@ -8,18 +8,10 @@
         </encoder>
     </appender>
 
-    <appender name="FILE" class="ch.qos.logback.core.FileAppender">
-        <file>tests.log</file>
-        <append>true</append>
-        <encoder>
-            <pattern>%-4relative [%thread] %-5level %logger{35} - %msg%n</pattern>
-        </encoder>
-    </appender>
-
     # File appender
     <appender name="fout" class="ch.qos.logback.core.FileAppender">
         # Name of a log file
-        <file>log4j/target/logback.log</file>
+        <file>log4j/target/metaquotes-logback.log</file>
         <append>false</append>
         <encoder>
             # Pattern of log message for file appender
@@ -30,7 +22,7 @@
     <logger name="org.example.MetaquotesTask" level="INFO"/>
 
     <root level="ALL">
-        <appender-ref ref="STDOUT" />
-        <appender-ref ref="fout" />
+        <appender-ref ref="STDOUT"/>
+        <appender-ref ref="fout"/>
     </root>
 </configuration>
