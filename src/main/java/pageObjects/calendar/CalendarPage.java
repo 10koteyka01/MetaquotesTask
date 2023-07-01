@@ -1,7 +1,8 @@
 package pageObjects.calendar;
 
-import io.appium.java_client.MobileElement;
+import org.openqa.selenium.By;
 import org.openqa.selenium.NoSuchElementException;
+import org.openqa.selenium.WebElement;
 import util.models.HistoryRow;
 
 import java.util.*;
@@ -15,15 +16,15 @@ public class CalendarPage {
     /**
      * Кнопка "Фильтр"
      */
-    public MobileElement filter() {
-        return mobileElementById("net.metaquotes.economiccalendar:id/menu_filter");
+    public WebElement filter() {
+        return WebElementById("net.metaquotes.economiccalendar:id/menu_filter");
     }
 
     /**
      * Событие
      */
-    public List<MobileElement> events() {
-        return mobileElementsById("net.metaquotes.economiccalendar:id/title");
+    public List<WebElement> events() {
+        return WebElementsById("net.metaquotes.economiccalendar:id/title");
     }
 
     /**
@@ -33,22 +34,22 @@ public class CalendarPage {
         /**
          * Страна
          */
-        public MobileElement countryName() {
-            return mobileElementById("net.metaquotes.economiccalendar:id/country_name");
+        public WebElement countryName() {
+            return WebElementById("net.metaquotes.economiccalendar:id/country_name");
         }
 
         /**
          * Важность события
          */
-        public MobileElement eventImportance() {
-            return mobileElementById("net.metaquotes.economiccalendar:id/event_importance");
+        public WebElement eventImportance() {
+            return WebElementById("net.metaquotes.economiccalendar:id/event_importance");
         }
 
         /**
          * Кнопка "История"
          */
-        public MobileElement historyButton() {
-            return mobileElementById("net.metaquotes.economiccalendar:id/tab_history");
+        public WebElement historyButton() {
+            return WebElementById("net.metaquotes.economiccalendar:id/tab_history");
         }
 
         /**
@@ -58,7 +59,7 @@ public class CalendarPage {
             Set<HistoryRow> history = new TreeSet<>();
             int size = 0;
             while (true) {
-                history.addAll(convertHistoryTableRows(mobileElementsByClassName("android.widget.LinearLayout")));
+                history.addAll(convertHistoryTableRows(WebElementsByClassName("android.widget.LinearLayout")));
                 scrollDownOneTime();
                 if (history.size() == size)
                     break;
@@ -68,7 +69,7 @@ public class CalendarPage {
             return history;
         }
 
-        private Set<HistoryRow> convertHistoryTableRows(List<MobileElement> table) {
+        private Set<HistoryRow> convertHistoryTableRows(List<WebElement> table) {
             Set<HistoryRow> historyRows = new HashSet<>();
 
             table.forEach(row -> {
@@ -83,31 +84,31 @@ public class CalendarPage {
             return historyRows;
         }
 
-        private MobileElement historyTableTime(MobileElement row) {
+        private WebElement historyTableTime(WebElement row) {
             return findTableElementById(row, "time");
         }
 
-        private MobileElement historyTableActual(MobileElement row) {
+        private WebElement historyTableActual(WebElement row) {
             return findTableElementById(row, "actual");
         }
 
-        private MobileElement historyTableForecast(MobileElement row) {
+        private WebElement historyTableForecast(WebElement row) {
             return findTableElementById(row, "forecast");
         }
 
-        private MobileElement historyTablePrevious(MobileElement row) {
+        private WebElement historyTablePrevious(WebElement row) {
             return findTableElementById(row, "previous");
         }
 
-        private MobileElement findTableElementById(MobileElement row, String elementName) {
+        private WebElement findTableElementById(WebElement row, String elementName) {
             try {
-                return row.findElementById("net.metaquotes.economiccalendar:id/".concat(elementName));
+                return row.findElement(By.id("net.metaquotes.economiccalendar:id/".concat(elementName)));
             } catch (NoSuchElementException ex) {
                 return null;
             }
         }
 
-        private boolean isTimeColumnSuccessfullyConvertsToDate(MobileElement element) {
+        private boolean isTimeColumnSuccessfullyConvertsToDate(WebElement element) {
             try {
                 new Date(element.getText());
                 return true;
